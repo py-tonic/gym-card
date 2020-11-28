@@ -1,5 +1,5 @@
 from collections import namedtuple
-
+import random 
 '''
 num of cards 13x8 = 104
 columns = 10
@@ -21,14 +21,26 @@ class SpiderEnv:
     '''
     def __init__(self, mode='easy'):
         if mode is 'easy':
-            self.cards = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']*8
+            self.order = ['K', 'Q', 'J', 10, 9, 8, 7, 6, 5, 4, 3, 2, 'A']
+            self.cards = self.order*8
+            random.shuffle(self.cards)
             self.move = 0
+            self.hide_board = []
+            self.view_board = []
+            for _ in range(44):
+                self.hide_board.append(self.cards.pop())
+            for _ in range(10):
+                self.view_board.append(self.cards.pop())
         '''
         self.Card = namedtuple('Card', ['value','suit'])
         self.suits = ['hearts','diamonds','spades','clubs']
         self.cards = [self.Card(value, suit) for value in range(1,14) for suit in self.suits]
         '''
 
+    def draw(self):
+
+
 
 env = SpiderEnv()
-print(env.cards)
+print(env.hide_board)
+print(env.view_board)
